@@ -88,7 +88,7 @@ Zero setup, zero cost, version-controllable schema, and more than sufficient for
 ### 1. Clone & install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/gift-agent.git
+git clone https://github.com/thedlgeorge/gift-agent.git
 cd gift-agent
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
@@ -180,16 +180,6 @@ python main.py schedule
 
 ```
 gift-agent/
-├── .claude/
-│   └── skills/                          # Claude Code skills (auto-loaded)
-│       ├── gift-agent-price-tracker/    # Skill: fetching & storing prices
-│       │   ├── SKILL.md
-│       │   └── references/price-tracker-code.md
-│       ├── gift-agent-optimizer/        # Skill: Claude agentic loop
-│       │   ├── SKILL.md
-│       │   └── references/optimizer-code.md
-│       └── gift-agent-notifier/         # Skill: alerts & notifications
-│           └── SKILL.md
 ├── agents/
 │   ├── price_tracker.py    # Fetches & stores prices daily
 │   ├── gift_optimizer.py   # Claude agentic loop for recommendations
@@ -207,16 +197,6 @@ gift-agent/
 ├── .env.example
 └── .gitignore
 ```
-
-### Claude Code Skills
-
-The `.claude/skills/` directory is automatically picked up by Claude Code when you open this project. Each skill teaches Claude how this codebase works — no need to re-explain the architecture in every session.
-
-| Skill | Auto-triggers when you ask about... |
-|-------|-------------------------------------|
-| `gift-agent-price-tracker` | fetching prices, ASIN tracking, CCC/Keepa, DB snapshots |
-| `gift-agent-optimizer` | recommendations, Claude tool-use loop, buy signals, budgets |
-| `gift-agent-notifier` | email alerts, price drop triggers, SendGrid, notification channels |
 
 ---
 
@@ -238,4 +218,4 @@ When using the CamelCamelCamel fallback, this agent scrapes at a respectful rate
 
 ## License
 
-MIT
+George D. Lopez, 2026.  
