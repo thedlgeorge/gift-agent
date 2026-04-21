@@ -1,0 +1,32 @@
+[
+  {
+    "id": "mom",
+    "name": "Mom",
+    "budget": 150.00,
+    "priority": "value",
+    "notes": "Prefers practical gifts",
+    "wishlist": [
+      {
+        "asin": "B0CHGFG64S",
+        "name": "Silicone Spatula Set",
+        "target_price": 35.00,
+        "max_price": 40.00,
+        "priority": 1
+      },
+      {
+        "asin": "B0BWHJ1FNK",
+        "name": "Mixing Bowls Set",
+        "target_price": 100.00,
+        "max_price": 110.00,
+        "priority": 2
+      },
+      {
+        "asin": "B089N57JGS",
+        "name": "Nonstick Baking Pans",
+        "target_price": 45.00,
+        "max_price": 50.00,
+        "priority": 3
+      }
+    ]
+  }
+]

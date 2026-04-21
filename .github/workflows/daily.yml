@@ -1,0 +1,57 @@
+name: Daily Price Tracker
+
+on:
+  schedule:
+    - cron: '0 8 * * *'   # 8am UTC daily
+  workflow_dispatch:        # allows manual trigger from GitHub UI
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Initialize database
+        run: python -c "from tools.db import init_db; init_db()"
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Fetch latest prices
+        run: python main.py track
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          KEEPA_API_KEY: ${{ secrets.KEEPA_API_KEY }}
+
+      - name: Check price targets and send alerts
+        run: python main.py notify
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          KEEPA_API_KEY: ${{ secrets.KEEPA_API_KEY }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          ALERT_FROM_EMAIL: ${{ secrets.ALERT_FROM_EMAIL }}
+          ALERT_TO_EMAIL: ${{ secrets.ALERT_TO_EMAIL }}
+
+      - name: Upload price DB as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: price-history-${{ github.run_number }}
+          path: data/gift_agent.db
+          retention-days: 30
